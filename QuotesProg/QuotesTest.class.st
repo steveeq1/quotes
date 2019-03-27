@@ -1,7 +1,7 @@
 Class {
 	#name : #QuotesTest,
 	#superclass : #TestCase,
-	#category : #'Quotes-Tests'
+	#category : #QuotesProg
 }
 
 { #category : #tests }
