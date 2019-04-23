@@ -2,19 +2,26 @@ Class {
 	#name : #QuotesForm,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'okButton',
-		'theLabel'
+		'list'
 	],
 	#category : #QuotesProg
 }
 
 { #category : #specs }
 QuotesForm class >> defaultSpec [
-	^ SpecLayout composed
-		newRow: [ :row |
-			row add: #okButton ]
-		origin: 0 @ 0 corner: 1 @ 0.7;
+"    <spec: #default>"
+
+^ SpecLayout composed
+	newRow: [ :row |
+		row add: #list ]
+	origin: 0 @ 0 corner: 100 @ 540.7;
 	yourself
+
+"    ^ SpecLayout composed
+        add: #list;
+        yourself"
+
+
 ]
 
 { #category : #api }
@@ -24,17 +31,24 @@ QuotesForm >> extent [
 
 { #category : #initialization }
 QuotesForm >> initializeWidgets [
-	"initialize widgets"
-	okButton := self newButton.
-	theLabel := self newLabel.
-	
-	"widget configuration"
-	okButton 
-		label: 'OK';
-		icon: (self iconNamed: #thumbsUp)
+    list := self newList.    
+    list items: (AbstractWidgetPresenter allSubclasses 
+        sorted: [:a :b | a name < b name ]).
+        
+    self focusOrder add: list
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+QuotesForm >> list [
+	^ list
+]
+
+{ #category : #api }
 QuotesForm >> title [
-	 	^ 'Select:'
+    ^ 'Widgets'
+]
+
+{ #category : #'events-shortcuts' }
+QuotesForm >> whenSelectedItemChanged: aBlock [
+    list whenSelectedItemChanged: aBlock
 ]

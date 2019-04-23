@@ -10,7 +10,7 @@ QuotesTest >> testChooseRandomQuote [
 
    |quotes random_quote quotes_collection|
 	quotes := Quotes new.
-	quotes_collection := quotes import: 'quote one\n\nquote two\n\nquote three'.
+	quotes_collection := quotes importQuotes: 'quote one\n\nquote two\n\nquote three'.
 	random_quote := quotes getRandomQuote.
 	self assert: (quotes_collection includes: random_quote).
 ]
@@ -22,5 +22,5 @@ QuotesTest >> testImportQuotes [
    |myString quotesCollection|
    myString := 'quote one\n\nquote two\n\nquote three'.
  	quotesCollection := (#('quote one' 'quote two' 'quote three') asOrderedCollection).
-	self assert: (Quotes new import: myString) equals: quotesCollection.
+	self assert: (Quotes new importQuotes: myString) equals: quotesCollection.
 ]
