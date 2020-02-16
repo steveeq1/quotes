@@ -2,12 +2,15 @@ Class {
 	#name : #QuotesPresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'topic_names',
+		'myButton',
 		'label',
-		'checkboxes',
+		'projectList',
 		'checkbox_1',
 		'checkbox_2',
 		'checkbox_3'
+	],
+	#classInstVars : [
+		'checkboxes'
 	],
 	#category : #QuotesProg
 }
@@ -15,14 +18,11 @@ Class {
 { #category : #initialization }
 QuotesPresenter class >> defaultSpec [
 	|foo|
-	foo := SpecColumnLayout composed. 
-	foo add: #label height: self toolbarHeight.
-	#checkboxes each: [ :f | foo add: #checkbox_1 height: self toolbarHeight].
-	"foo add: #checkbox_1 height: self toolbarHeight.
-	foo add: #checkbox_2 height: self toolbarHeight.
-	foo add: #checkbox_3 height: self toolbarHeight."
-	foo yourself.
-	^ foo.
+	foo := SpecColumnLayout composed
+			add: #label height: self toolbarHeight;
+			add: #projectList.
+	^ foo yourself.
+			
 ]
 
 { #category : #accessing }
@@ -40,28 +40,39 @@ QuotesPresenter >> checkbox_3 [
 	^ checkbox_3
 ]
 
-{ #category : #accessing }
-QuotesPresenter >> checkboxes [
-	^ checkboxes.
-]
-
 { #category : #initialization }
 QuotesPresenter >> initializeWidgets [
-	|foo|
+	"label"
 	label := self newLabel.
 	label label: 'this is a test label'.
-	foo := #('one' 'two' 'three' 'four').
-	checkboxes := foo collect: [ :f | self newCheckBox label: f ].
+	
+	"Checkboxes"
 	checkbox_1 := self newCheckBox label: 'one'.
 	checkbox_2 := self newCheckBox label: 'two'.
 	checkbox_3 := self newCheckBox label: 'three'.	
-	
-	^ 'foo'.
+
+	"Bottom button"
+	myButton := self newButton.
+	myButton label: 'Press me'.
+
+	"Project list"
+	projectList := self newList displayBlock: [ :x | x buildWithSpec ];
+	items: {checkbox_1 . checkbox_2 . checkbox_3}.
 ]
 
 { #category : #accessing }
 QuotesPresenter >> label [
 	^ label.
+]
+
+{ #category : #accessing }
+QuotesPresenter >> myButton [
+	^ myButton
+]
+
+{ #category : #accessing }
+QuotesPresenter >> projectList [
+	^ projectList.
 ]
 
 { #category : #initialization }
