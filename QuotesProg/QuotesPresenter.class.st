@@ -9,6 +9,9 @@ Class {
 		'checkbox_2',
 		'checkbox_3'
 	],
+	#classVars : [
+		'test'
+	],
 	#classInstVars : [
 		'checkboxes'
 	],
