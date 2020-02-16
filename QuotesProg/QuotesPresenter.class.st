@@ -1,84 +1,59 @@
 Class {
 	#name : #QuotesPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
-		'myButton',
-		'label',
-		'projectList',
-		'checkbox_1',
-		'checkbox_2',
-		'checkbox_3'
-	],
-	#classVars : [
-		'test'
-	],
-	#classInstVars : [
-		'checkboxes'
+		'back_button',
+		'forward_button',
+		'text_area'
 	],
 	#category : #QuotesProg
 }
 
-{ #category : #initialization }
+{ #category : #specs }
 QuotesPresenter class >> defaultSpec [
-	|foo|
-	foo := SpecColumnLayout composed
-			add: #label height: self toolbarHeight;
-			add: #projectList.
-	^ foo yourself.
-			
+	^ SpBoxLayout newHorizontal
+		add: #back_button;
+		add: #text_area;
+		add: #forward_button;
+		yourself.
 ]
 
 { #category : #accessing }
-QuotesPresenter >> checkbox_1 [
-	^ checkbox_1
+QuotesPresenter >> back_button [
+	^ back_button
 ]
 
 { #category : #accessing }
-QuotesPresenter >> checkbox_2 [
-	^ checkbox_2
-]
-
-{ #category : #accessing }
-QuotesPresenter >> checkbox_3 [
-	^ checkbox_3
+QuotesPresenter >> forward_button [
+	^ forward_button
 ]
 
 { #category : #initialization }
-QuotesPresenter >> initializeWidgets [
-	"label"
-	label := self newLabel.
-	label label: 'this is a test label'.
+QuotesPresenter >> initializePresenter [ 
+	back_button action: [ UIManager default alert: 'hello, world!' ].
+	forward_button action: [ UIManager default alert: 'goodbye, cruel world!' ].
+]
+
+{ #category : #initialization }
+QuotesPresenter >> initializeWidgets [ 
+	back_button := self newButton.
+	forward_button := self newButton.
+	text_area := self newText.
+	back_button label: '<<'.
+	forward_button label: '>>'.
 	
-	"Checkboxes"
-	checkbox_1 := self newCheckBox label: 'one'.
-	checkbox_2 := self newCheckBox label: 'two'.
-	checkbox_3 := self newCheckBox label: 'three'.	
-
-	"Bottom button"
-	myButton := self newButton.
-	myButton label: 'Press me'.
-
-	"Project list"
-	projectList := self newList displayBlock: [ :x | x buildWithSpec ];
-	items: {checkbox_1 . checkbox_2 . checkbox_3}.
+	self focusOrder
+		add: back_button;
+		add: text_area;
+		add: forward_button.
 ]
 
 { #category : #accessing }
-QuotesPresenter >> label [
-	^ label.
+QuotesPresenter >> text_area [
+	^ text_area.
 ]
 
-{ #category : #accessing }
-QuotesPresenter >> myButton [
-	^ myButton
-]
-
-{ #category : #accessing }
-QuotesPresenter >> projectList [
-	^ projectList.
-]
-
-{ #category : #initialization }
+{ #category : #TOREMOVE }
 QuotesPresenter >> title [
-	^ 'test title'.
+	^ 'Name photo'
 ]
